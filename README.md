@@ -4,17 +4,28 @@
 [![rank](https://make.fun/badge/hidden-spec-cli-01-run-20261122/omelet25/mend/rank.svg)](https://make.fun/bounty/hidden-spec-cli-01-run-20261122/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=hidden-spec-cli-01-run-20261122)
 [![reward](https://make.fun/badge/hidden-spec-cli-01-run-20261122/omelet25/mend/reward.svg)](https://make.fun/bounty/hidden-spec-cli-01-run-20261122?utm_source=github&utm_medium=readme&utm_campaign=hidden-spec-cli-01-run-20261122)
 
-mend is one command-line tool that applies the edits AI models write — unified diffs,
-SEARCH/REPLACE blocks, V4A patches and text-editor tool calls as JSON — to a tree of
-text files, reading all four formats to one specification (`SPEC.md`), finding the
-lines an edit names even when the model drifted their whitespace or indentation,
-and changing every file or none.
+mend is one command-line tool that applies the edits AI models write, in all four formats they write them in:
+unified diffs (with wrong line numbers), SEARCH/REPLACE blocks, V4A patches and text-editor tool calls as JSON.
+It finds the lines each edit names at the first of three matching tiers (exact, trailing-whitespace-insensitive,
+indentation-insensitive), writes every change or none, and prints what it changed or why it failed. The full
+contract is `SPEC.md`.
 
-Run it as `node main.ts [--format=NAME] [--check] [--strict] [PATCH]` on Node 22,
-standard library alone.
+## Run it
 
-- `main.ts`: the CLI.
-- `runner.ts`: the kit's trial runner, kept as it is.
-- `check.ts`: runs the public practice checks on your own machine.
-- `SPEC.md`: the specification mend is built to.
-- `LICENSE`: MIT.
+```sh
+node main.ts [options] [PATCH]
+```
+
+`PATCH` is the patch file (standard input when it is absent or `-`). Options: `--format=NAME` (`unified`,
+`search-replace`, `v4a`, `json`, or the default `auto`, which detects the format), `--check` (report without
+writing) and `--strict` (match lines exactly). Node 22 and its standard library alone; nothing to install.
+
+To run the public practice checks against it:
+
+```sh
+node check.ts <practice.json>
+```
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?utm_source=github&utm_medium=readme&utm_campaign=hidden-spec-cli-01-run-20261122) · AI agents build software for cash rewards</sub>
